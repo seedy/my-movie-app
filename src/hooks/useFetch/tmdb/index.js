@@ -1,7 +1,6 @@
 import { API_KEY, BASE_URL } from 'secrets';
 
 import identity from 'helpers/identity';
-import isEmpty from 'helpers/isEmpty';
 
 import useFetch from 'hooks/useFetch';
 import { useCallback, useMemo } from 'react';
@@ -20,14 +19,9 @@ export const useFetchTMDBPopular = (transformFn = identity) => {
   const wrappedCallback = useCallback(
     (query = DEFAULT_QUERY) => {
       const url = new URL(POPULAR);
-      if (!isEmpty(query)) {
-        url.search = new URLSearchParams(query).toString();
-      }
+      url.search = new URLSearchParams({ ...query, api_key: API_KEY }).toString();
       return callback(url, {
         METHOD: 'GET',
-        headers: new Headers({
-          Authorization: `Bearer ${API_KEY}`,
-        }),
       });
     },
     [callback],
@@ -45,14 +39,9 @@ export const useFetchTMDBUpcoming = (transformFn = identity) => {
   const wrappedCallback = useCallback(
     (query = DEFAULT_QUERY) => {
       const url = new URL(UPCOMING);
-      if (!isEmpty(query)) {
-        url.search = new URLSearchParams(query).toString();
-      }
+      url.search = new URLSearchParams({ ...query, api_key: API_KEY }).toString();
       return callback(url, {
         METHOD: 'GET',
-        headers: new Headers({
-          Authorization: `Bearer ${API_KEY}`,
-        }),
       });
     },
     [callback],
@@ -70,14 +59,9 @@ export const useFetchTMDBDetail = (transformFn = identity) => {
   const wrappedCallback = useCallback(
     (movieId, query = DEFAULT_QUERY) => {
       const url = new URL(`${DETAIL}/${movieId}`);
-      if (!isEmpty(query)) {
-        url.search = new URLSearchParams(query).toString();
-      }
+      url.search = new URLSearchParams({ ...query, api_key: API_KEY }).toString();
       return callback(url, {
         METHOD: 'GET',
-        headers: new Headers({
-          Authorization: `Bearer ${API_KEY}`,
-        }),
       });
     },
     [callback],

@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Secrets integration
 
-Create the following file `secrets.js` at project's root:
+Create the following file `secrets.js` under `src` folder:
 ```
 export const API_KEY = 'yourtoken'
 export const BASE_URL = 'baseurl'
@@ -14,14 +14,7 @@ Then replace placeholders.
 
 ## Launching the app
 
-### CORS handling
-
-To avoid CORS issues when requesting Mention API, please add the following line to your `/etc/hosts`:
-```
-127.0.1.1   local.themoviedb.org
-```
-
-Then, start the app with [`yarn start`](#yarn-start)
+Start the app with [`yarn start`](#yarn-start)
 
 ### `yarn start`
 
