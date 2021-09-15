@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import ImageListItem from '@material-ui/core/ImageListItem';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Backdrop from '@material-ui/core/Backdrop';
 import Box from '@material-ui/core/Box';
 
@@ -61,7 +60,6 @@ const ImageListItemHoverFlip = forwardRef(({
   return (
     <ImageListItem
       ref={ref}
-      component={ButtonBase}
       classes={{
         root: internalClasses.root,
         item: internalClasses.item,
