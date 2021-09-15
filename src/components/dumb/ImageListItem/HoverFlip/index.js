@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -12,7 +13,7 @@ import Box from '@material-ui/core/Box';
 const useStyles = makeStyles((theme) => ({
   root: {
     '&:hover': {
-      '& $image': {
+      '& $item': {
         transform: 'rotateY(360deg)',
       },
       '& $backdrop': {
@@ -20,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
       },
       '& $content': {
         opacity: 1,
+        transition: `opacity ${theme.transitions.duration.standard}ms ${theme.transitions.easing.easeIn} 0.4s`,
       },
     },
   },
-  image: {
+  item: {
     perspective: '10px',
     transition: 'transform 1s',
     transformStyle: 'preserve-3d',
@@ -42,16 +44,16 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     height: '100%',
     width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    transition: `opacity ${theme.transitions.duration.standard}ms ${theme.transitions.easing.easeIn}`,
     opacity: 0,
   },
 }));
 
 // COMPONENTS
-const ImageListItemFlippable = forwardRef(({
+const ImageListItemHoverFlip = forwardRef(({
   alt, src,
   back,
+  classes,
   ...props
 }, ref) => {
   const internalClasses = useStyles();
@@ -62,7 +64,7 @@ const ImageListItemFlippable = forwardRef(({
       component={ButtonBase}
       classes={{
         root: internalClasses.root,
-        item: internalClasses.image,
+        item: internalClasses.item,
       }}
       {...props}
     >
@@ -77,7 +79,7 @@ const ImageListItemFlippable = forwardRef(({
           root: internalClasses.backdrop,
         }}
       >
-        <Box className={internalClasses.content}>
+        <Box className={clsx(internalClasses.content, classes.content)}>
           {back}
         </Box>
       </Backdrop>
@@ -85,14 +87,20 @@ const ImageListItemFlippable = forwardRef(({
   );
 });
 
-ImageListItemFlippable.propTypes = {
+ImageListItemHoverFlip.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   back: PropTypes.node,
+  classes: PropTypes.shape({
+    content: PropTypes.string,
+  }),
 };
 
-ImageListItemFlippable.defaultProps = {
+ImageListItemHoverFlip.defaultProps = {
   back: null,
+  classes: {
+    content: '',
+  },
 };
 
-export default ImageListItemFlippable;
+export default ImageListItemHoverFlip;
