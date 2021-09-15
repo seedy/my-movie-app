@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 import { DONE } from 'hooks/useFetch';
+import { MAX, PRECISION } from 'constants/rating';
 
 import isEmpty from 'helpers/isEmpty';
 import isNil from 'helpers/isNil';
@@ -14,6 +15,7 @@ import ImageListSkeleton from 'components/dumb/ImageList/Skeleton';
 import Typography from '@material-ui/core/Typography';
 import ImageListItemHoverFlip from 'components/dumb/ImageListItem/HoverFlip';
 import Rating from '@material-ui/lab/Rating';
+import LinkDetails from 'components/smart/Link/Details';
 
 // HOOKS
 const useStyles = makeStyles(() => ({
@@ -56,9 +58,11 @@ const ImageListMovies = ({
 
   useEffect(
     () => {
-      get();
+      if (isNil(movies)) {
+        get();
+      }
     },
-    [get],
+    [get, movies],
   );
 
   if (!done) {
@@ -78,13 +82,15 @@ const ImageListMovies = ({
           classes={{
             content: classes.itemContent,
           }}
+          id={id}
+          component={LinkDetails}
           key={id}
           alt={title}
-          src={`${baseUrl}/${posterSize}/${posterPath}`}
+          src={`${baseUrl}${posterSize}${posterPath}`}
           back={(
             <>
               <Typography variant="caption">{title}</Typography>
-              <Rating name="score" value={voteAverage} precision={0.5} readOnly />
+              <Rating name="score" value={voteAverage} max={MAX} precision={PRECISION} readOnly />
             </>
           )}
         />
