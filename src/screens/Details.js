@@ -106,7 +106,7 @@ const DetailsScreen = ({ config, configReady }) => {
   );
 
   return (
-    <Dialog open maxWidth={false} onClose={onClose} fullScreen={isXs}>
+    <Dialog open maxWidth="lg" onClose={onClose} fullScreen={isXs}>
       <BackdropImage
         p={2}
         enter={detailReady}
