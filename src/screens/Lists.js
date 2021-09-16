@@ -15,7 +15,6 @@ import ImageListMoviesUpcoming from 'components/smart/ImageList/Movies/Upcoming'
 import Typography from '@material-ui/core/Typography';
 import ImageListSkeleton from 'components/dumb/ImageList/Skeleton';
 import ImageListResponsive from 'components/dumb/ImageList/Responsive';
-import MoviesContextProvider from 'components/smart/ImageList/Movies/Context';
 
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
@@ -65,9 +64,7 @@ const ListsScreen = ({ config, configReady }) => {
           />
           <CardContent>
             {configReady ? (
-              <MoviesContextProvider>
-                <ImageListMoviesPopular rowHeight={ROW_HEIGHT} {...listConfig} />
-              </MoviesContextProvider>
+              <ImageListMoviesPopular rowHeight={ROW_HEIGHT} {...listConfig} />
             ) : (
               <ImageListResponsive rowHeight={ROW_HEIGHT} component={ImageListSkeleton} />
             )}
@@ -92,9 +89,7 @@ const ListsScreen = ({ config, configReady }) => {
         />
         <CardContent>
           {configReady ? (
-            <MoviesContextProvider>
-              <ImageListMoviesUpcoming rowHeight={ROW_HEIGHT} {...listConfig} />
-            </MoviesContextProvider>
+            <ImageListMoviesUpcoming rowHeight={ROW_HEIGHT} {...listConfig} />
           ) : (
             <ImageListResponsive rowHeight={ROW_HEIGHT} component={ImageListSkeleton} />
           )}

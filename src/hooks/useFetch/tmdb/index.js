@@ -10,7 +10,7 @@ const CONFIG = `${BASE_URL}/configuration`;
 
 const POPULAR = `${BASE_URL}/movie/popular`;
 const UPCOMING = `${BASE_URL}/movie/upcoming`;
-const DETAIL = `${BASE_URL}/movie/`;
+const DETAIL = `${BASE_URL}/movie`;
 
 const DEFAULT_QUERY = {};
 

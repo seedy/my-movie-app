@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 
-import { DONE } from 'hooks/useFetch';
 import { MAX, PRECISION } from 'constants/rating';
 
 import isEmpty from 'helpers/isEmpty';
 import isNil from 'helpers/isNil';
 
-import { useMoviesContext } from 'components/smart/ImageList/Movies/Context';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import ImageListResponsive from 'components/dumb/ImageList/Responsive';
@@ -31,29 +29,13 @@ const useStyles = makeStyles(() => ({
 
 // COMPONENTS
 const ImageListMovies = ({
-  status, callback, placeholder, baseUrl, posterSize, ...props
+  ready, get, movies, placeholder, baseUrl, posterSize, ...props
 }) => {
   const classes = useStyles();
-
-
-  const { movies, onReceive } = useMoviesContext();
-
-  const done = useMemo(
-    () => status === DONE,
-    [status],
-  );
 
   const hasMovies = useMemo(
     () => !isNil(movies) && !isEmpty(movies),
     [movies],
-  );
-
-  const get = useCallback(
-    async () => {
-      const result = await callback();
-      onReceive(result);
-    },
-    [callback, onReceive],
   );
 
   useEffect(
@@ -65,7 +47,7 @@ const ImageListMovies = ({
     [get, movies],
   );
 
-  if (!done) {
+  if (!ready) {
     return <ImageListResponsive component={ImageListSkeleton} {...props} />;
   }
 
@@ -100,15 +82,22 @@ const ImageListMovies = ({
 };
 
 ImageListMovies.propTypes = {
-  status: PropTypes.symbol,
-  callback: PropTypes.func.isRequired,
+  ready: PropTypes.bool,
+  get: PropTypes.func.isRequired,
+  movies: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    posterPath: PropTypes.string,
+    title: PropTypes.string,
+    voteAverage: PropTypes.number,
+  })),
   baseUrl: PropTypes.string.isRequired,
   posterSize: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
 };
 
 ImageListMovies.defaultProps = {
-  status: undefined,
+  ready: false,
+  movies: undefined,
 };
 
 export default ImageListMovies;

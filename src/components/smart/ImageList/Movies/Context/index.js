@@ -3,8 +3,10 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 
 // CONTEXT
 export const MoviesContext = createContext({
-  movies: null,
-  onReceive: null,
+  popular: null,
+  upcoming: null,
+  onPopular: null,
+  onUpcoming: null,
 });
 
 // HOOKS
@@ -12,19 +14,27 @@ export const useMoviesContext = () => useContext(MoviesContext);
 
 // COMPONENTS
 const MoviesContextProvider = ({ children, ...props }) => {
-  const [movies, setMovies] = useState(null);
+  const [popular, setPopular] = useState(null);
+  const [upcoming, setUpcoming] = useState(null);
 
-  const onReceive = useCallback(
-    (next) => setMovies(next),
-    [setMovies],
+  const onPopular = useCallback(
+    (next) => setPopular(next),
+    [setPopular],
+  );
+
+  const onUpcoming = useCallback(
+    (next) => setUpcoming(next),
+    [setUpcoming],
   );
 
   const value = useMemo(
     () => ({
-      movies,
-      onReceive,
+      popular,
+      upcoming,
+      onPopular,
+      onUpcoming,
     }),
-    [movies, onReceive],
+    [popular, upcoming, onPopular, onUpcoming],
   );
 
   return (
