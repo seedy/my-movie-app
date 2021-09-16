@@ -119,3 +119,7 @@ I didn't implement fetch of multiple pages for the movies list, simply because I
 That's a big subject, which would have required more work regarding how I fetched the data.
 
 I think it was not expected, so I didn't push further that way.
+
+### Data storage
+
+I didn't give a lot of credit to data storage management here. I must admit I could have spent a lot more time on that part.
