@@ -135,12 +135,13 @@ DetailsScreen.propTypes = {
   config: PropTypes.shape({
     baseUrl: PropTypes.string,
     posterSizes: PropTypes.arrayOf(PropTypes.string),
-  }).isRequired,
+  }),
   configReady: PropTypes.bool.isRequired,
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 DetailsScreen.defaultProps = {
+  config: {},
   height: 'auto',
 };
 

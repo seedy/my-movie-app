@@ -15,6 +15,7 @@ import ListsScreen from 'screens/Lists';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import MoviesContextProvider from 'components/smart/ImageList/Movies/Context';
 
 // HELPERS
 const objectToCamelCaseImages = compose(
@@ -57,14 +58,16 @@ function App() {
       <CssBaseline />
       <Container component={Box} my={3}>
         <BrowserRouter>
-          <Switch>
-            <Route path={routes.details} exact>
-              <DetailsScreen height="calc(100vh - 48px)" config={config} configReady={configReady} />
-            </Route>
-            <Route>
-              <ListsScreen config={config} configReady={configReady} />
-            </Route>
-          </Switch>
+          <MoviesContextProvider>
+            <Switch>
+              <Route path={routes.details} exact>
+                <DetailsScreen height="calc(100vh - 48px)" config={config} configReady={configReady} />
+              </Route>
+              <Route>
+                <ListsScreen config={config} configReady={configReady} />
+              </Route>
+            </Switch>
+          </MoviesContextProvider>
         </BrowserRouter>
       </Container>
 
