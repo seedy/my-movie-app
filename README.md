@@ -48,7 +48,9 @@ At first, I had implemented 2 Contexts, one for each list of movies (popular mov
 
 To handle a global storage and avoid refetching data each time the Lists screen was rendered, I reworked my Context and moved it to the root of the app.
 
-I am even a bit more reluctant in using Redux coupled with API requests. The more you have state management logic in your app, the more you have to work on it to make sure data is fresh.
+I didn't store movie details inside the application, which means they are fetched each time the Details screen is opened. In a real application context, I expect we may want regular updates regarding ratings for instance.
+
+I am even a bit more reluctant towards using Redux coupled with API requests' status. The more you have state management logic in your app, the more you have to work on it to make sure data is fresh.
 
 I think there are better solutions than relying on Redux's global storage to improve the user experience nowadays, such as Websockets, GraphQl, etc.
 
