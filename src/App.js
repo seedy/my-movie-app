@@ -9,13 +9,19 @@ import isEmpty from 'helpers/isEmpty';
 import { useFetchTMDBConfig } from 'hooks/useFetch/tmdb';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import AppBarStatic from 'components/dumb/AppBar/Static';
+import Toolbar from '@material-ui/core/Toolbar';
+import { Route, BrowserRouter } from 'react-router-dom';
 import DetailsScreen from 'screens/Details';
 import ListsScreen from 'screens/Lists';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import BoxFlexFill from 'components/dumb/Box/FlexFill';
 import MoviesContextProvider from 'components/smart/ImageList/Movies/Context';
+import ThemeProvider from 'components/smart/IconButton/DarkMode/Context/ThemeProvider';
+import DarkModeContextProvider from 'components/smart/IconButton/DarkMode/Context';
+import IconButtonDarkModeWithContext from 'components/smart/IconButton/DarkMode/WithContext';
 
 // HELPERS
 const objectToCamelCaseImages = compose(
@@ -54,24 +60,29 @@ function App() {
   );
 
   return (
-    <>
-      <CssBaseline />
-      <Container component={Box} my={3}>
-        <BrowserRouter>
-          <MoviesContextProvider>
-            <Switch>
+    <DarkModeContextProvider>
+      <ThemeProvider>
+        <CssBaseline />
+        <AppBarStatic>
+          <Toolbar>
+            <BoxFlexFill />
+            <IconButtonDarkModeWithContext />
+          </Toolbar>
+        </AppBarStatic>
+        <Container component={Box} my={3}>
+          <BrowserRouter>
+            <MoviesContextProvider>
               <Route path={routes.details} exact>
-                <DetailsScreen height="calc(100vh - 48px)" config={config} configReady={configReady} />
+                <DetailsScreen config={config} configReady={configReady} />
               </Route>
               <Route>
                 <ListsScreen config={config} configReady={configReady} />
               </Route>
-            </Switch>
-          </MoviesContextProvider>
-        </BrowserRouter>
-      </Container>
-
-    </>
+            </MoviesContextProvider>
+          </BrowserRouter>
+        </Container>
+      </ThemeProvider>
+    </DarkModeContextProvider>
   );
 }
 

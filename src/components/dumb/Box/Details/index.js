@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import { useMemo } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import useIsXs from 'hooks/useIsXs';
 
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -17,9 +18,11 @@ const useStyles = makeStyles((theme) => ({
 
 // COMPONENTS
 const BoxDetails = ({
-  title, tagline, genres, overview, releaseDate, adult, budget, revenue, ...props
+  title, tagline, genres, overview, releaseDate, adult, budget, ...props
 }) => {
   const classes = useStyles();
+
+  const isXs = useIsXs();
 
   const genresText = useMemo(
     () => genres.join(', '),
@@ -41,11 +44,13 @@ const BoxDetails = ({
         className={classes.titleBold}
       >
         {tagline}
-
       </Typography>
-      <Typography variant="body1" paragraph>
-        {overview}
-      </Typography>
+      {!adult && <ExplicitIcon />}
+      {!isXs && (
+        <Typography variant="body1" paragraph>
+          {overview}
+        </Typography>
+      )}
       <Typography gutterBottom>
         <span className={classes.titleBold}>Genre: </span>
         {genresText}
@@ -54,15 +59,11 @@ const BoxDetails = ({
         <span className={classes.titleBold}>Release: </span>
         {releaseDate}
       </Typography>
-      <Typography gutterBottom>
-        <span className={classes.titleBold}>Budget / Revenue: </span>
+      <Typography>
+        <span className={classes.titleBold}>Budget: </span>
         $
         {budget}
-        {' / '}
-        $
-        {revenue}
       </Typography>
-      {adult && <ExplicitIcon />}
     </Box>
   );
 };
@@ -74,7 +75,6 @@ BoxDetails.propTypes = {
   overview: PropTypes.string.isRequired,
   releaseDate: PropTypes.string.isRequired,
   budget: PropTypes.number.isRequired,
-  revenue: PropTypes.number.isRequired,
   adult: PropTypes.bool.isRequired,
 };
 
