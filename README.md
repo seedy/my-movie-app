@@ -26,6 +26,12 @@ You will also see any lint errors in the console.
 
 # Assessment synthesis
 
+Here are some thoughts and points I'd like to highlight. 
+
+I permitted myself to give my opinion fully, with no intent to criticize anything other than my work. 
+
+I wish you a good review.
+
 ## Github branches
 
 I followed a Github Flow with PRs related to hypothetical features. I considered the main steps of the application's implementation where my features.
@@ -61,3 +67,55 @@ For the same reasons I avoided Redux, I feel Axios is a big library and I had ve
 ## Time spent
 
 **10 hours**
+
+## Extra
+
+### List items animation
+
+I animated the images in the movies list on hover. 
+
+Touch seems to work properly with this animation when simulating mobile layout. I already had implemented a similar feature in another project, so I know I could alo work with onClick instead.
+
+### Dialog for detailed screen
+
+I moved the detailed screen inside a Dialog, I thought it looked prettier this way.
+
+I wanted to find a way to nicely display the backdrop image element, without blank spaces in the rest of the page.
+
+### Theming and dark mode
+
+I love implementing dark mode whenever I can. So I took some extra time to add the feature. By default, if the browser has not setting regarding dark mode, it is set by default.
+
+User can toggle a button to switch between dark and light modes.
+
+## Room for improvements
+
+### API image sizes
+
+I am not so proud of my handling of the different image sizes offered by the API. I think a more deep study of responsive coupled with image sizes would help optimize the rendering.
+
+### Image backdrop
+
+I had some issues with the image backdrop when displaying a mobile layout: most of the time, I either had to stretch the backdrop image or repeat it to make sure it took the whole screen. I really wanted my backdrop to be fullscreen on mobile, out of personal taste, I guess.
+
+I thought about using a linear-gradient for instance, but I didn't take much time to dig in that way. I ended up repeating the image when needed, as it gives minimal visual differences.
+
+### Lists layout
+
+I went for a minimal layout with a few icons. I think I could add more, with extra features
+
+### Translations
+
+I could have implemented a "switch to French/English" feature.
+
+It would be fairly easy to integrate a translation framework, such as I18next. It would require replacing plain text by translation variables.
+
+The movie API already handles language query params for movie titles and informations.
+
+### Infinite list or multiple pages for movies List
+
+I didn't implement fetch of multiple pages for the movies list, simply because I wanted to focus on the design, rather than on pagination.
+
+That's a big subject, which would have required more work regarding how I fetched the data.
+
+I think it was not expected, so I didn't push further that way.
