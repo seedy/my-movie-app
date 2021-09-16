@@ -9,7 +9,7 @@ import isEmpty from 'helpers/isEmpty';
 import { useFetchTMDBConfig } from 'hooks/useFetch/tmdb';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import DetailsScreen from 'screens/Details';
 import ListsScreen from 'screens/Lists';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -59,14 +59,12 @@ function App() {
       <Container component={Box} my={3}>
         <BrowserRouter>
           <MoviesContextProvider>
-            <Switch>
-              <Route path={routes.details} exact>
-                <DetailsScreen height="calc(100vh - 48px)" config={config} configReady={configReady} />
-              </Route>
-              <Route>
-                <ListsScreen config={config} configReady={configReady} />
-              </Route>
-            </Switch>
+            <Route path={routes.details} exact>
+              <DetailsScreen config={config} configReady={configReady} />
+            </Route>
+            <Route>
+              <ListsScreen config={config} configReady={configReady} />
+            </Route>
           </MoviesContextProvider>
         </BrowserRouter>
       </Container>

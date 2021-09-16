@@ -8,14 +8,16 @@ import objectToCamelCase from 'helpers/objectToCamelCase';
 import prop from 'helpers/prop';
 import isNil from 'helpers/isNil';
 
+import useIsXs from 'hooks/useIsXs';
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useFetchTMDBDetail } from 'hooks/useFetch/tmdb';
 
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import RatingImage from 'components/dumb/Rating/Image';
 import IconButton from '@material-ui/core/IconButton';
 import BoxDetails from 'components/dumb/Box/Details';
+import Dialog from '@material-ui/core/Dialog';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import BackdropImage from 'components/dumb/Backdrop/Image';
@@ -27,7 +29,7 @@ const EMPTY_OBJ = {};
 const nameProp = prop('name');
 
 // COMPONENTS
-const DetailsScreen = ({ config, configReady, height }) => {
+const DetailsScreen = ({ config, configReady }) => {
   const [status, callback] = useFetchTMDBDetail(objectToCamelCase);
   const [details, setDetails] = useState();
 
@@ -37,10 +39,12 @@ const DetailsScreen = ({ config, configReady, height }) => {
   );
 
   const { id } = useParams();
+  const { push } = useHistory();
+  const isXs = useIsXs();
 
   const {
     backdropPath,
-    title, adult, budget, genres, overview, releaseDate, revenue, tagline,
+    title, adult, budget, genres, overview, releaseDate, tagline,
     posterPath, voteAverage, voteCount,
   } = useMemo(
     () => details || EMPTY_OBJ,
@@ -87,6 +91,13 @@ const DetailsScreen = ({ config, configReady, height }) => {
     [callback, onDetails, id],
   );
 
+  const onClose = useCallback(
+    () => {
+      push(routes._);
+    },
+    [push],
+  );
+
   useEffect(
     () => {
       get();
@@ -95,19 +106,20 @@ const DetailsScreen = ({ config, configReady, height }) => {
   );
 
   return (
-    <BackdropImage
-      p={2}
-      enter={detailReady}
-      src={backdropSrc}
-      height={height}
-    >
-      <Box mt={-2}>
-        <IconButton color="inherit" edge="start" component={Link} to={routes._}>
-          <ArrowBackIcon />
-        </IconButton>
-      </Box>
-      {detailReady && (
-        <Box display="flex" flexDirection="row">
+    <Dialog open maxWidth={false} onClose={onClose} fullScreen={isXs}>
+      <BackdropImage
+        p={2}
+        enter={detailReady}
+        src={backdropSrc}
+        height="100%"
+      >
+        <Box mt={-2}>
+          <IconButton color="inherit" edge="start" component={Link} to={routes._}>
+            <ArrowBackIcon />
+          </IconButton>
+        </Box>
+        {detailReady && (
+        <Box display="flex" flexDirection={isXs ? 'column' : 'row'}>
           <RatingImage
             src={posterSrc}
             title={title}
@@ -122,12 +134,12 @@ const DetailsScreen = ({ config, configReady, height }) => {
             releaseDate={releaseDate}
             adult={adult}
             budget={budget}
-            revenue={revenue}
-            ml={4}
+            ml={isXs ? 0 : 4}
           />
         </Box>
-      )}
-    </BackdropImage>
+        )}
+      </BackdropImage>
+    </Dialog>
   );
 };
 
@@ -137,12 +149,10 @@ DetailsScreen.propTypes = {
     posterSizes: PropTypes.arrayOf(PropTypes.string),
   }),
   configReady: PropTypes.bool.isRequired,
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 DetailsScreen.defaultProps = {
   config: {},
-  height: 'auto',
 };
 
 export default DetailsScreen;
